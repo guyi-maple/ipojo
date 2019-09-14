@@ -18,7 +18,7 @@ public abstract class DefaultApplicationActivator implements BundleActivator {
         applicationContext.register(applicationContext);
         applicationContext.register(BundleContext.class,context);
 
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
         applicationContext.register(ScheduledExecutorService.class,executorService);
         this.registerComponent(applicationContext,context);
         applicationContext.setName(this.getName());

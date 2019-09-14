@@ -3,6 +3,7 @@ package top.guyi.iot.ipojo.application.bean;
 import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.annotation.Primary;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartEvent;
+import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartSuccessEvent;
 import top.guyi.iot.ipojo.application.bean.interfaces.InitializingBean;
 import top.guyi.iot.ipojo.application.component.ComponentInterface;
 import top.guyi.iot.ipojo.application.utils.AnnotationUtils;
@@ -52,6 +53,12 @@ public class BeanInfo {
     public void onStart(ApplicationContext applicationContext, BundleContext bundleContext) throws Exception {
         if (this.bean instanceof ApplicationStartEvent){
             ((ApplicationStartEvent) this.bean).onStart(applicationContext,bundleContext);
+        }
+    }
+
+    public void onStartSuccess(ApplicationContext applicationContext, BundleContext bundleContext) throws Exception {
+        if (this.bean instanceof ApplicationStartSuccessEvent){
+            ((ApplicationStartSuccessEvent) this.bean).onEvent(applicationContext,bundleContext);
         }
     }
 }

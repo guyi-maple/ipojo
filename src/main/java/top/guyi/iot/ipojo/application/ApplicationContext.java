@@ -118,6 +118,10 @@ public class ApplicationContext {
         for (BeanInfo beanInfo : this.beanInfoMap.values()) {
             beanInfo.onStart(this,bundleContext);
         }
+
+        for (BeanInfo beanInfo : beanInfoMap.values()) {
+            beanInfo.onStartSuccess(this,bundleContext);
+        }
     }
 
     public <T> List<T> getList(Class<T> classes){
