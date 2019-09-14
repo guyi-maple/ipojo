@@ -16,5 +16,6 @@ public class ServiceReferenceEntry {
         this.id = UUID.randomUUID().toString();
         this.serviceClasses = serviceClasses;
         this.invoker = invoker;
+        this.checker = checker;
     }
 }

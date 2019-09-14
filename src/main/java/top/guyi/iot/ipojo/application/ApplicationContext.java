@@ -120,6 +120,21 @@ public class ApplicationContext {
         }
     }
 
+    public <T> List<T> getList(Class<T> classes){
+        List<BeanInfo> beans = new LinkedList<>();
+        for (Class<?> clazz : beanInfoMap.keySet()) {
+            if (ReflectUtils.subordinate(clazz,classes)){
+                beans.add(beanInfoMap.get(clazz));
+            }
+        }
+        List<T> list = new LinkedList<>();
+        for (BeanInfo bean : beans) {
+            list.add(classes.cast(bean.getTarget()));
+        }
+
+        return list;
+    }
+
     public <T> T getOrNull(Class<T> classes){
         try {
             return this.get(classes,classes.getSimpleName());

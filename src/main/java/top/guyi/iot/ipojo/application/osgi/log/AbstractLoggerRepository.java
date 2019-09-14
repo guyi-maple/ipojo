@@ -18,6 +18,7 @@ public class AbstractLoggerRepository {
 
     @BundleServiceReference(LoggerFactory.class)
     public void awaitLoggerFactory(LoggerFactory factory,ApplicationContext context){
+        StaticLogger.setLogger(factory.getLogger("IPOJO"));
         for (Map.Entry<String, LoggerMethodInterceptor> entry : interceptorHashMap.entrySet()) {
             entry.getValue().setLogger(new DefaultLogger(factory.getLogger(DEFAULT_LOGGER_KEY.equals(entry.getKey()) ? context.getName() : entry.getKey())));
         }
