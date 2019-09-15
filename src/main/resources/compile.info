@@ -15,5 +15,10 @@
       "^org.apache.felix.*$",
       "^org.osgi.*$"
     ]
+  },
+  "manifest": {
+    "Private-Package": [
+      "top.guyi.iot.ipojo.application"
+    ]
   }
 }
