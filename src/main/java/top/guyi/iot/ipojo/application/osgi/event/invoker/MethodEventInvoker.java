@@ -1,8 +1,6 @@
 package top.guyi.iot.ipojo.application.osgi.event.invoker;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.osgi.service.event.EventHandler;
 import top.guyi.iot.ipojo.application.ApplicationContext;
@@ -15,9 +13,9 @@ import java.util.List;
 public abstract class MethodEventInvoker implements EventHandler {
 
     @Getter
-    private Class<?> eventClass;
+    private Class<? extends Event> eventClass;
     private ApplicationContext applicationContext;
-    public MethodEventInvoker(Class<?> eventClass, ApplicationContext applicationContext) {
+    public MethodEventInvoker(Class<? extends Event> eventClass, ApplicationContext applicationContext) {
         this.eventClass = eventClass;
         this.applicationContext = applicationContext;
     }

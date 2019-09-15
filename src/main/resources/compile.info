@@ -1,0 +1,19 @@
+{
+  "name": "ipojo",
+  "exclude": {
+    "import": [
+      "^javax.security.*$",
+      "^org.osgi.util.*$",
+      "org.apache.felix",
+      "^net.sf.cglib.*$",
+      "^org.apache.tools.*$",
+      "^org.osgi.service.metatype$",
+      "^org.osgi.service.cm$",
+      "^com.google.gson.*$"
+    ],
+    "dependencyCopy": [
+      "^org.apache.felix.*$",
+      "^org.osgi.*$"
+    ]
+  }
+}
