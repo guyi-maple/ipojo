@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Resource {
 
-    String value() default "";
+    String name() default "";
+
+    boolean equals() default true;
 
 }
