@@ -14,11 +14,13 @@
     "dependencyCopy": [
       "^org.apache.felix.*$",
       "^org.osgi.*$"
+    ],
+    "dependencyScope": [
+      "provided",
+      "test"
     ]
   },
   "manifest": {
-    "Private-Package": [
-      "top.guyi.iot.ipojo.application"
-    ]
+    "Private-Package": "top.guyi.iot.ipojo.application"
   }
 }
