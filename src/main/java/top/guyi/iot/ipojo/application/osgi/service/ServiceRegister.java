@@ -8,11 +8,11 @@ import top.guyi.iot.ipojo.application.osgi.service.entry.ServiceEntry;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ServiceRegister implements ApplicationStartEvent {
+public abstract class ServiceRegister implements ApplicationStartEvent {
 
     private List<ServiceEntry> entries = new LinkedList<>();
 
-    protected void registerAll(){}
+    protected abstract void registerAll();
 
     protected void register(ServiceEntry entry){
         this.entries.add(entry);

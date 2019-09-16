@@ -41,7 +41,7 @@ public abstract class EventRegister implements ApplicationStartEvent {
     protected abstract void registerAllMethodListener();
     protected void registerMethodListener(BundleContext bundleContext, MethodEventInvoker invoker){
         try {
-            String[] topic = ((Event)invoker.getEventClass().newInstance()).topic();
+            String[] topic = invoker.getEventClass().newInstance().topic();
             Dictionary<String,Object> props = new Hashtable<>();
             props.put(EventConstants.EVENT_TOPIC,topic);
             invoker.setConverters(this.converters);

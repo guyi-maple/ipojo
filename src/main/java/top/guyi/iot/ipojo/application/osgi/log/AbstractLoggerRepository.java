@@ -9,12 +9,12 @@ import org.osgi.service.log.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AbstractLoggerRepository {
+public abstract class AbstractLoggerRepository {
 
     final static String DEFAULT_LOGGER_KEY = "default";
 
-    private static Map<String,Logger> loggerMap = new HashMap<>();
-    private static Map<String,LoggerMethodInterceptor> interceptorHashMap = new HashMap<>();
+    private Map<String,Logger> loggerMap = new HashMap<>();
+    private Map<String,LoggerMethodInterceptor> interceptorHashMap = new HashMap<>();
 
     @BundleServiceReference(LoggerFactory.class)
     public void awaitLoggerFactory(LoggerFactory factory,ApplicationContext context){
@@ -24,7 +24,7 @@ public class AbstractLoggerRepository {
         }
     }
 
-    public static Logger get(String name){
+    public Logger get(String name){
         Logger logger = loggerMap.get(name);
         if (logger == null){
             LoggerMethodInterceptor interceptor = interceptorHashMap.get(name);

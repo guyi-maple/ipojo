@@ -3,6 +3,7 @@ package top.guyi.iot.ipojo.application.osgi.service.reference;
 import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartEvent;
 import org.osgi.framework.BundleContext;
+import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartSuccessEvent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractBundleServiceListener implements ApplicationStartEvent {
+public abstract class AbstractBundleServiceListener implements ApplicationStartEvent, ApplicationStartSuccessEvent {
 
     private ApplicationContext applicationContext;
     private BundleContext bundleContext;
@@ -35,6 +36,10 @@ public abstract class AbstractBundleServiceListener implements ApplicationStartE
         this.entries = new HashMap<>();
         this.registerAll(applicationContext);
         this.executorService = applicationContext.get(ScheduledExecutorService.class,true);
+    }
+
+    @Override
+    public void onEvent(final ApplicationContext applicationContext, final BundleContext bundleContext) throws Exception {
         this.executorService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {

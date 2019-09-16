@@ -13,6 +13,8 @@ import org.osgi.framework.BundleContext;
 @Data
 public class BeanInfo {
 
+    private ComponentInfo component;
+
     private String name;
     private Class<?> classes;
 
@@ -23,7 +25,9 @@ public class BeanInfo {
     private Object bean;
     private Object target;
 
-    public BeanInfo(Class<?> classes) {
+    public BeanInfo(Class<?> classes,ComponentInfo component) {
+        this.component = component;
+        this.name = this.component.getName();
         this.classes = classes;
         this.primary = AnnotationUtils.hasAnnotation(Primary.class,classes);
     }

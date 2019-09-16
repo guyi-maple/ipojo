@@ -21,7 +21,12 @@ public class ApplicationContext {
     @Getter
     private String name;
 
-    private Map<Class<?>, BeanInfo> beanInfoMap;
+    private ApplicationContextRegister register;
+    public ApplicationContextRegister register(){
+        return this.register;
+    }
+
+    Map<Class<?>, BeanInfo> beanInfoMap;
     private List<BeanCreator> beanCreators;
 
     private Comparator<BeanCreator> createBeanComparator = new Comparator<BeanCreator>(){
@@ -36,6 +41,8 @@ public class ApplicationContext {
 
         beanCreators = new LinkedList<>();
         beanCreators.add(new DefaultBeanCreator());
+
+        register = new ApplicationContextRegister(this);
     }
 
     private Object createBean(BeanInfo info) throws Exception {
@@ -47,7 +54,7 @@ public class ApplicationContext {
         throw new ComponentCreateException(info.getClasses());
     }
 
-    private void isBeanCreator(BeanInfo info) throws Exception {
+    void isBeanCreator(BeanInfo info) throws Exception {
         if (ReflectUtils.subordinate(info.getClasses(),BeanCreator.class)){
             BeanCreator creator = (BeanCreator) info.getTarget();
             if (creator == null){
@@ -59,67 +66,51 @@ public class ApplicationContext {
         }
     }
 
-    private void isFactoryBean (BeanInfo info) throws Exception {
+    void isFactoryBean (BeanInfo info) throws Exception {
         if (ReflectUtils.subordinate(info.getClasses(),FactoryBean.class)){
             FactoryBean factoryBean = (FactoryBean) info.getTarget();
             if (factoryBean == null){
                 factoryBean = (FactoryBean) this.createBean(info);
                 info.setTarget(factoryBean);
             }
-            this.register(factoryBean.forType(),factoryBean.create(this,factoryBean.forType()));
+            this.register().put(
+                    factoryBean.forType(),
+                    factoryBean.create(this,factoryBean.forType())
+            );
         }
     }
 
-    public void register(Object bean) {
-        BeanInfo info = new BeanInfo(bean.getClass());
-        info.setBean(bean);
-        this.register(info);
-    }
-
-    public void register(Class<?> classes,Object bean) {
-        BeanInfo info = new BeanInfo(classes);
-        info.setTarget(bean);
-        this.register(info);
-    }
-
-    public void register(Class<?> classes) {
-        BeanInfo info = new BeanInfo(classes);
-        this.register(info);
-    }
-
-    public void register(BeanInfo info) {
-        this.beanInfoMap.put(info.getClasses(),info);
-
-        try {
-            this.isBeanCreator(info);
-            this.isFactoryBean(info);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void start(BundleContext bundleContext) throws Exception {
-        for (BeanInfo beanInfo : this.beanInfoMap.values()) {
+        List<BeanInfo> infos = new LinkedList<>(this.beanInfoMap.values());
+        Collections.sort(infos, new Comparator<BeanInfo>() {
+            @Override
+            public int compare(BeanInfo o1, BeanInfo o2) {
+                return Integer.compare(o1.getComponent().getOrder(),o2.getComponent().getOrder());
+            }
+        });
+
+        for (BeanInfo beanInfo : infos) {
             if (!beanInfo.isCreate()){
                 beanInfo.setTarget(this.createBean(beanInfo));
             }
         }
 
-        for (BeanInfo beanInfo : this.beanInfoMap.values()) {
+        for (BeanInfo beanInfo : infos) {
             if (beanInfo.getTarget() instanceof ComponentInterface){
                 ((ComponentInterface) beanInfo.getBean()).inject(this);
             }
         }
 
-        for (BeanInfo beanInfo : this.beanInfoMap.values()) {
+        for (BeanInfo beanInfo : infos) {
             beanInfo.initializingBean();
         }
 
-        for (BeanInfo beanInfo : this.beanInfoMap.values()) {
+        for (BeanInfo beanInfo : infos) {
             beanInfo.onStart(this,bundleContext);
         }
 
-        for (BeanInfo beanInfo : beanInfoMap.values()) {
+        for (BeanInfo beanInfo : infos) {
             beanInfo.onStartSuccess(this,bundleContext);
         }
     }
@@ -220,6 +211,10 @@ public class ApplicationContext {
             }
         }
         return beans;
+    }
+
+    public void stop(BundleContext bundleContext){
+
     }
 
 }

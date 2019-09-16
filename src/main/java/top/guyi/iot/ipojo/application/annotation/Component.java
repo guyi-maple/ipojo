@@ -11,4 +11,8 @@ public @interface Component {
 
     String name() default "";
 
+    boolean proxy() default true;
+
+    int order() default 999;
+
 }

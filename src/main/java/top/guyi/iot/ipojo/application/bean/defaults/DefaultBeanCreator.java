@@ -23,10 +23,14 @@ public class DefaultBeanCreator implements BeanCreator {
             info.setBean(classes.newInstance());
         }
 
-        Enhancer enhancer = new Enhancer();
-        enhancer.setSuperclass(classes);
-        enhancer.setCallback(new DefaultMethodInterceptor(info,context));
-        return enhancer.create();
+        if (info.getComponent().isProxy()){
+            Enhancer enhancer = new Enhancer();
+            enhancer.setSuperclass(classes);
+            enhancer.setCallback(new DefaultMethodInterceptor(info,context));
+            return enhancer.create();
+        }else{
+            return info.getBean();
+        }
     }
 
 }

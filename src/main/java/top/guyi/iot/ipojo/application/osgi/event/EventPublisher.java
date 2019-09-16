@@ -39,7 +39,7 @@ public abstract class EventPublisher implements ApplicationStartEvent {
         if (this.admin == null){
             this.cache.add(event);
         }else{
-            List<org.osgi.service.event.Event> target = null;
+            List<org.osgi.service.event.Event> target = Collections.emptyList();
             for (EventConverter converter : this.converters) {
                 if (converter.check(event.getClass())){
                     target = converter.convert(event);
