@@ -11,7 +11,7 @@ public abstract class ServiceReferenceInvoker {
     protected <T> T get(Class<T> classes,ApplicationContext applicationContext, BundleContext bundleContext){
         T value = applicationContext.getOrNull(classes);
         if (value == null){
-            ServiceReference reference = bundleContext.getServiceReference(classes);
+            ServiceReference reference = bundleContext.getServiceReference(classes.getName());
             if (reference != null){
                 value = classes.cast(bundleContext.getService(reference));
             }
