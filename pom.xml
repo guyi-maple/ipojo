@@ -6,7 +6,7 @@
 
     <groupId>top.guyi.iot.ipojo</groupId>
     <artifactId>ipojo</artifactId>
-    <version>1.3.0.0</version>
+    <version>1.0.0.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,6 +15,40 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>guyi</id>
+            <name>guyi</name>
+            <url>http://nexus.guyi-maple.top/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>guyi</id>
+            <name>guyi</name>
+            <url>http://nexus.guyi-maple.top/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>guyi-iot</id>
+            <name>guyi-iot</name>
+            <url>http://nexus.guyi-maple.top/nexus/content/repositories/iot/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
 

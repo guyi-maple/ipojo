@@ -1,5 +1,7 @@
 {
   "name": "ipojo",
+  "jdk": "7",
+  "formatJdkVersion": true,
   "exclude": {
     "dependencyCopy": [
       "^org.apache.felix.*$",
