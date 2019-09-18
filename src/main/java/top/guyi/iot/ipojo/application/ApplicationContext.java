@@ -5,6 +5,7 @@ import top.guyi.iot.ipojo.application.bean.defaults.DefaultBeanCreator;
 import top.guyi.iot.ipojo.application.bean.interfaces.BeanCreator;
 import top.guyi.iot.ipojo.application.bean.interfaces.FactoryBean;
 import top.guyi.iot.ipojo.application.component.ComponentInterface;
+import top.guyi.iot.ipojo.application.component.ForType;
 import top.guyi.iot.ipojo.application.exception.ComponentCreateException;
 import top.guyi.iot.ipojo.application.exception.ComponentNotFoundException;
 import top.guyi.iot.ipojo.application.exception.ComponentRepeatException;
@@ -12,6 +13,7 @@ import top.guyi.iot.ipojo.application.utils.ReflectUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.osgi.framework.BundleContext;
+import top.guyi.iot.ipojo.application.utils.StringUtils;
 
 import java.util.*;
 
@@ -115,21 +117,6 @@ public class ApplicationContext {
         }
     }
 
-    public <T> List<T> getList(Class<T> classes){
-        List<BeanInfo> beans = new LinkedList<>();
-        for (Class<?> clazz : beanInfoMap.keySet()) {
-            if (ReflectUtils.subordinate(clazz,classes)){
-                beans.add(beanInfoMap.get(clazz));
-            }
-        }
-        List<T> list = new LinkedList<>();
-        for (BeanInfo bean : beans) {
-            list.add(classes.cast(bean.getTarget()));
-        }
-
-        return list;
-    }
-
     public <T> T getOrNull(Class<T> classes){
         try {
             return this.get(classes,classes.getSimpleName());
@@ -211,6 +198,48 @@ public class ApplicationContext {
             }
         }
         return beans;
+    }
+
+    public <T> List<T> getList(Class<T> classes){
+        return this.getList(classes,null);
+    }
+
+    public <T> List<T> getList(Class<T> classes,String name){
+        List<BeanInfo> beans = new LinkedList<>();
+        for (Class<?> clazz : beanInfoMap.keySet()) {
+            if (ReflectUtils.subordinate(clazz,classes)){
+                beans.add(beanInfoMap.get(clazz));
+            }
+        }
+
+        if (!StringUtils.isEmpty(name)){
+            List<BeanInfo> tmp = new LinkedList<>();
+            for (BeanInfo bean : beans) {
+                if (name.equals(bean.getName())){
+                    tmp.add(bean);
+                }
+            }
+            beans = tmp;
+        }
+
+        List<T> list = new LinkedList<>();
+        for (BeanInfo bean : beans) {
+            list.add(classes.cast(bean.getTarget()));
+        }
+
+        return list;
+    }
+
+    public <T extends ForType> Map<String,T> getMap(Class<T> classes){
+        return this.getMap(classes,null);
+    }
+    public <T extends ForType> Map<String,T> getMap(Class<T> classes,String name){
+        List<T> list = this.getList(classes,name);
+        Map<String,T> map = new HashMap<>();
+        for (T bean : list) {
+            map.put(bean.forType() == null ? null : bean.forType().toString(),bean);
+        }
+        return map;
     }
 
     public void stop(BundleContext bundleContext){
