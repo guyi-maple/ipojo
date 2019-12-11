@@ -27,7 +27,7 @@ public class EventInvoker implements EventHandler {
         try{
             this.listener.onEvent(event);
         }catch (Exception e){
-            this.listener.onError(e);
+            this.listener.onError(event,e);
         }
     }
 

@@ -54,15 +54,4 @@ public class BeanInfo {
         }
     }
 
-    public void onStart(ApplicationContext applicationContext, BundleContext bundleContext) throws Exception {
-        if (this.bean instanceof ApplicationStartEvent){
-            ((ApplicationStartEvent) this.bean).onStart(applicationContext,bundleContext);
-        }
-    }
-
-    public void onStartSuccess(ApplicationContext applicationContext, BundleContext bundleContext) throws Exception {
-        if (this.bean instanceof ApplicationStartSuccessEvent){
-            ((ApplicationStartSuccessEvent) this.bean).onEvent(applicationContext,bundleContext);
-        }
-    }
 }

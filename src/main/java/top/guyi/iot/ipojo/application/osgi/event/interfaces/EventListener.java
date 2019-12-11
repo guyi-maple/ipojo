@@ -6,6 +6,6 @@ public interface EventListener<E extends Event> {
 
     void onEvent(E event) throws Exception;
 
-    void onError(Exception e);
+    void onError(E event,Exception e);
 
 }

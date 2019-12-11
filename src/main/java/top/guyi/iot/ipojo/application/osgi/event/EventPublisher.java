@@ -47,9 +47,13 @@ public abstract class EventPublisher implements ApplicationStartEvent {
                 }
             }
             for (org.osgi.service.event.Event event1 : target) {
-                this.admin.postEvent(event1);
+                this.post(event1);
             }
         }
+    }
+
+    public void post(org.osgi.service.event.Event event){
+        this.admin.postEvent(event);
     }
 
     @Override

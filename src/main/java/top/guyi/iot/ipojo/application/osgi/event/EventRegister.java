@@ -11,6 +11,7 @@ import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventConverter;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventListener;
 import top.guyi.iot.ipojo.application.osgi.event.invoker.EventInvoker;
 import top.guyi.iot.ipojo.application.osgi.event.invoker.MethodEventInvoker;
+import top.guyi.iot.ipojo.application.osgi.event.invoker.MethodNativeEventInvoker;
 
 import java.util.*;
 
@@ -49,6 +50,12 @@ public abstract class EventRegister implements ApplicationStartEvent {
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+    protected void registerNativeMethodListener(BundleContext bundleContext, MethodNativeEventInvoker invoker){
+        String[] topic = new String[]{invoker.getTopic()};
+        Dictionary<String,Object> props = new Hashtable<>();
+        props.put(EventConstants.EVENT_TOPIC,topic);
+        bundleContext.registerService(EventHandler.class.getName(),invoker,props);
     }
 
     @Override

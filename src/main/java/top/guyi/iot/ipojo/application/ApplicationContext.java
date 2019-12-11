@@ -16,12 +16,19 @@ import org.osgi.framework.BundleContext;
 import top.guyi.iot.ipojo.application.utils.StringUtils;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 
 public class ApplicationContext {
 
     @Setter
     @Getter
     private String name;
+    @Getter
+    @Setter
+    private Map<String,String> env = Collections.emptyMap();
+
+    @Getter
+    private ExecutorService service;
 
     private ApplicationContextRegister register;
     public ApplicationContextRegister register(){
@@ -83,7 +90,9 @@ public class ApplicationContext {
     }
 
 
-    public void start(BundleContext bundleContext) throws Exception {
+    public void start(BundleContext bundleContext,ExecutorService service) throws Exception {
+        this.service = service;
+
         List<BeanInfo> infos = new LinkedList<>(this.beanInfoMap.values());
         Collections.sort(infos, new Comparator<BeanInfo>() {
             @Override
@@ -108,13 +117,6 @@ public class ApplicationContext {
             beanInfo.initializingBean();
         }
 
-        for (BeanInfo beanInfo : infos) {
-            beanInfo.onStart(this,bundleContext);
-        }
-
-        for (BeanInfo beanInfo : infos) {
-            beanInfo.onStartSuccess(this,bundleContext);
-        }
     }
 
     public <T> T getOrNull(Class<T> classes){
@@ -243,7 +245,9 @@ public class ApplicationContext {
     }
 
     public void stop(BundleContext bundleContext){
-
+        if (this.service != null){
+            this.service.shutdownNow();
+        }
     }
 
 }

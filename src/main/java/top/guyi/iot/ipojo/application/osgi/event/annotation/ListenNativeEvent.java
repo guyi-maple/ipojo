@@ -1,11 +1,14 @@
-package top.guyi.iot.ipojo.application.annotation;
+package top.guyi.iot.ipojo.application.osgi.event.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.ANNOTATION_TYPE,ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Primary {
+public @interface ListenNativeEvent {
+
+    String value();
+
 }

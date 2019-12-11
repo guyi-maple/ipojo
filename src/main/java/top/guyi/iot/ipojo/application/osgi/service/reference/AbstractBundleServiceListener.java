@@ -4,19 +4,18 @@ import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartEvent;
 import org.osgi.framework.BundleContext;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartSuccessEvent;
+import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStopEvent;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public abstract class AbstractBundleServiceListener implements ApplicationStartEvent, ApplicationStartSuccessEvent {
+public abstract class AbstractBundleServiceListener
+        implements ApplicationStartEvent, ApplicationStartSuccessEvent, ApplicationStopEvent {
 
     private ApplicationContext applicationContext;
     private BundleContext bundleContext;
-    private ScheduledExecutorService executorService;
 
     protected abstract void registerAll(ApplicationContext applicationContext);
 
@@ -35,30 +34,39 @@ public abstract class AbstractBundleServiceListener implements ApplicationStartE
         this.bundleContext = bundleContext;
         this.entries = new HashMap<>();
         this.registerAll(applicationContext);
-        this.executorService = applicationContext.get(ScheduledExecutorService.class,true);
+    }
+
+    private List<DefaultServiceTracker> trackers = new LinkedList<>();
+
+    @Override
+    public void onStartSuccess(final ApplicationContext applicationContext, final BundleContext bundleContext) throws Exception {
+        Map<Class<?>,List<ServiceReferenceEntry>> trackerTemp = new HashMap<>();
+
+        for (ServiceReferenceEntry entry : entries.values()) {
+            for (Class<?> serviceClass : entry.getServiceClasses()) {
+                List<ServiceReferenceEntry> list = trackerTemp.get(serviceClass);
+                if (list == null){
+                    list = new LinkedList<>();
+                }
+                list.add(entry);
+                trackerTemp.put(serviceClass,list);
+            }
+        }
+
+        for (Map.Entry<Class<?>, List<ServiceReferenceEntry>> entry : trackerTemp.entrySet()) {
+            DefaultServiceTracker tracker = new DefaultServiceTracker(applicationContext,bundleContext,entry.getKey(),entry.getValue());
+            tracker.open();
+            this.trackers.add(tracker);
+        }
+
+        this.entries = null;
     }
 
     @Override
-    public void onEvent(final ApplicationContext applicationContext, final BundleContext bundleContext) throws Exception {
-        this.executorService.scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                List<String> removeId = new LinkedList<>();
-                for (final ServiceReferenceEntry entry : entries.values()) {
-                    if (entry.getInvoker().check(entry,applicationContext,bundleContext)){
-                        executorService.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                entry.getInvoker().invoke(entry,applicationContext,bundleContext);
-                            }
-                        });
-                        removeId.add(entry.getId());
-                    }
-                }
-                for (String id : removeId) {
-                    entries.remove(id);
-                }
-            }
-        },0,10, TimeUnit.SECONDS);
+    public void onStop(ApplicationContext applicationContext, BundleContext bundleContext) {
+        for (DefaultServiceTracker tracker : this.trackers) {
+            tracker.close();
+        }
+        this.trackers = null;
     }
 }

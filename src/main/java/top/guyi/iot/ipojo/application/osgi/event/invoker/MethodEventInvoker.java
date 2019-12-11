@@ -34,11 +34,13 @@ public abstract class MethodEventInvoker implements EventHandler {
                 break;
             }
         }
-        try {
-            this.invoke(this.applicationContext,event);
-        }catch (Exception e){
-            e.printStackTrace();
-            StaticLogger.error("事件执行错误 {}",e.getMessage(),e);
+        if (event != null){
+            try {
+                this.invoke(this.applicationContext,event);
+            }catch (Exception e){
+                e.printStackTrace();
+                StaticLogger.error("事件执行错误 {}",e.getMessage(),e);
+            }
         }
     }
 

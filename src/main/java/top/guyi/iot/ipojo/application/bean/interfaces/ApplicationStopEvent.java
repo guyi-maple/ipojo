@@ -3,8 +3,8 @@ package top.guyi.iot.ipojo.application.bean.interfaces;
 import org.osgi.framework.BundleContext;
 import top.guyi.iot.ipojo.application.ApplicationContext;
 
-public interface ApplicationStartSuccessEvent {
+public interface ApplicationStopEvent {
 
-    void onStartSuccess(ApplicationContext applicationContext, BundleContext bundleContext) throws Exception;
+    void onStop(ApplicationContext applicationContext, BundleContext bundleContext);
 
 }
