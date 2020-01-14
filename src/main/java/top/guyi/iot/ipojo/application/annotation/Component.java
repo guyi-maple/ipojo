@@ -11,6 +11,11 @@ public @interface Component {
 
     String name() default "";
 
+    /**
+     * 是否使用代理
+     * @return 是否代理
+     */
+    @Deprecated
     boolean proxy() default false;
 
     int order() default 999;

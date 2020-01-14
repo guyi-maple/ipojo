@@ -11,4 +11,6 @@ public @interface ConfigurationKey {
 
     String key() default "";
 
+    boolean file() default false;
+
 }

@@ -1,5 +1,7 @@
 package top.guyi.iot.ipojo.application;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import top.guyi.iot.ipojo.application.bean.BeanInfo;
 import top.guyi.iot.ipojo.application.bean.defaults.DefaultBeanCreator;
 import top.guyi.iot.ipojo.application.bean.interfaces.BeanCreator;
@@ -15,6 +17,9 @@ import lombok.Setter;
 import org.osgi.framework.BundleContext;
 import top.guyi.iot.ipojo.application.utils.StringUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
@@ -26,6 +31,26 @@ public class ApplicationContext {
     @Getter
     @Setter
     private Map<String,String> env = Collections.emptyMap();
+
+    private Map<String,Object> configurationFile = Collections.emptyMap();
+    private void setConfigurationFile(){
+        File file = new File(String.format("%s.configuration.json",this.getName()));
+        if (file.exists()){
+            try {
+                this.configurationFile = new Gson().fromJson(new FileReader(file),new TypeToken<Map<String,Object>>(){}.getType());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public <T> T getConfigurationFile(String key,Class<T> type,T origin){
+        Object value = this.configurationFile.get(key);
+        if (value == null){
+            return origin;
+        }
+        return type.cast(value);
+    }
 
     @Getter
     private ExecutorService service;
@@ -100,6 +125,8 @@ public class ApplicationContext {
                 return Integer.compare(o1.getComponent().getOrder(),o2.getComponent().getOrder());
             }
         });
+
+        this.setConfigurationFile();
 
         for (BeanInfo beanInfo : infos) {
             if (!beanInfo.isCreate()){
@@ -245,9 +272,7 @@ public class ApplicationContext {
     }
 
     public void stop(BundleContext bundleContext){
-        if (this.service != null){
-            this.service.shutdownNow();
-        }
+
     }
 
 }

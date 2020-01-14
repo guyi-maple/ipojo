@@ -15,17 +15,23 @@ public abstract class DefaultApplicationActivator implements BundleActivator {
     protected abstract String getName();
     protected abstract EnvMap getEnv();
 
+//    protected abstract void onAfterPropertiesSet(ApplicationContext applicationContext,BundleContext bundleContext);
     protected abstract void onStart(ApplicationContext applicationContext,BundleContext bundleContext);
     protected abstract void onStartSuccess(ApplicationContext applicationContext,BundleContext bundleContext);
     protected abstract void onStop(ApplicationContext applicationContext,BundleContext bundleContext);
 
     private ApplicationContext applicationContext;
+    private ScheduledExecutorService executorService;
+
+    private static final int THREAD_MAX_COUNT = 5;
 
     @Override
     public void start(BundleContext context) throws Exception {
         applicationContext = new ApplicationContext();
 
-        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
+        int threadMaxCount = this.getEnv().get("thread.max.count") == null ?
+                THREAD_MAX_COUNT : Integer.parseInt(this.getEnv().get("thread.max.count"));
+        executorService = new DefaultScheduledExecutorService(threadMaxCount);
 
         applicationContext.register()
                 .put(applicationContext)
@@ -41,6 +47,7 @@ public abstract class DefaultApplicationActivator implements BundleActivator {
 
         applicationContext.start(context,executorService);
 
+//        this.onAfterPropertiesSet(applicationContext,context);
         this.onStart(applicationContext,context);
         this.onStartSuccess(applicationContext,context);
     }
@@ -49,6 +56,9 @@ public abstract class DefaultApplicationActivator implements BundleActivator {
     public void stop(BundleContext context) throws Exception {
         this.onStop(applicationContext,context);
         applicationContext.stop(context);
+        if (this.executorService != null){
+            this.executorService.shutdownNow();
+        }
     }
 
 }

@@ -11,4 +11,8 @@ public @interface Service {
 
     Class<?> value();
 
+    boolean export() default true;
+
+    String version() default "";
+
 }

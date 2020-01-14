@@ -2,7 +2,6 @@ package top.guyi.iot.ipojo.application.osgi.log;
 
 import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.osgi.service.reference.BundleServiceReference;
-import net.sf.cglib.proxy.Enhancer;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerFactory;
 
@@ -14,29 +13,24 @@ public abstract class AbstractLoggerRepository {
     final static String DEFAULT_LOGGER_KEY = "default";
 
     private Map<String,Logger> loggerMap = new HashMap<>();
-    private Map<String,LoggerMethodInterceptor> interceptorHashMap = new HashMap<>();
+    private Map<String,DefaultLogger> interceptorHashMap = new HashMap<>();
 
     @BundleServiceReference(LoggerFactory.class)
     public void awaitLoggerFactory(LoggerFactory factory,ApplicationContext context){
         StaticLogger.setLogger(factory.getLogger("IPOJO"));
-        for (Map.Entry<String, LoggerMethodInterceptor> entry : interceptorHashMap.entrySet()) {
-            entry.getValue().setLogger(new DefaultLogger(factory.getLogger(DEFAULT_LOGGER_KEY.equals(entry.getKey()) ? context.getName() : entry.getKey())));
+        for (Map.Entry<String, DefaultLogger> entry : interceptorHashMap.entrySet()) {
+            entry.getValue().setLogger(factory.getLogger(DEFAULT_LOGGER_KEY.equals(entry.getKey()) ? context.getName() : entry.getKey()));
         }
     }
 
     public Logger get(String name){
         Logger logger = loggerMap.get(name);
         if (logger == null){
-            LoggerMethodInterceptor interceptor = interceptorHashMap.get(name);
-            if (interceptor == null){
-                interceptor = new LoggerMethodInterceptor(null);
-                interceptorHashMap.put(name,interceptor);
+            logger = interceptorHashMap.get(name);
+            if (logger == null){
+                logger = new DefaultLogger(new NoneLogger(name));
+                interceptorHashMap.put(name,(DefaultLogger) logger);
             }
-
-            Enhancer enhancer = new Enhancer();
-            enhancer.setSuperclass(DefaultLogger.class);
-            enhancer.setCallback(interceptor);
-            logger = (Logger) enhancer.create();
             loggerMap.put(name,logger);
         }
         return logger;
