@@ -6,6 +6,7 @@ import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartEvent;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStopEvent;
 import top.guyi.iot.ipojo.application.bean.interfaces.InitializingBean;
 import top.guyi.iot.ipojo.application.osgi.timer.entry.TaskEntry;
+import top.guyi.iot.ipojo.application.osgi.timer.enums.TimeType;
 
 import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
@@ -40,7 +41,12 @@ public abstract class AbstractTimerManager implements InitializingBean,Applicati
             if (task.isEnable() && task.getCoefficient() != 0){
                 list.add(task);
             }else{
-                this.taskMap.remove(task.getName());
+                if (task.getType() == TimeType.CYCLE && task.getCoefficient() == 0){
+                    task.makeCoefficient(this.getIndex(),MAX_LENGTH);
+                    this.getTree(task.getIndex()).add(task);
+                }else{
+                    this.taskMap.remove(task.getName());
+                }
             }
         }
         this.setTree(index,list);
@@ -63,8 +69,9 @@ public abstract class AbstractTimerManager implements InitializingBean,Applicati
         TaskEntry task = new TaskEntry(
                 runnable.name(),
                 MAX_LENGTH,
-                this.getIndex() ,
+                this.getIndex(),
                 runnable.delay(),
+                runnable.type(),
                 runnable
         );
         this.getTree(task.getIndex()).add(task);
@@ -84,7 +91,7 @@ public abstract class AbstractTimerManager implements InitializingBean,Applicati
     private ApplicationContext applicationContext;
     private ScheduledFuture<?> future;
 
-    protected abstract List<TimerRunnable> timerRunnableList();
+    protected abstract void registerAll();
 
     @Override
     public void afterPropertiesSet() {
@@ -98,9 +105,7 @@ public abstract class AbstractTimerManager implements InitializingBean,Applicati
     @Override
     public void onStart(ApplicationContext applicationContext, BundleContext bundleContext) {
         this.applicationContext = applicationContext;
-        for (TimerRunnable runnable : this.timerRunnableList()) {
-            this.register(runnable);
-        }
+        this.registerAll();
     }
 
     @Override

@@ -14,11 +14,9 @@ public @interface Timer {
 
     String name() default "";
 
-    long delay();
+    int delay();
 
-    long initDelay() default -1;
-
-    TimeUnit unit() default TimeUnit.SECONDS;
+    int initDelay() default -1;
 
     TimeType type() default TimeType.CYCLE;
 
