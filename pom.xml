@@ -25,7 +25,7 @@
         <pluginRepository>
             <id>guyi</id>
             <name>guyi</name>
-            <url>http://nexus.guyi-maple.top/nexus/content/groups/public/</url>
+            <url>https://repo.rdc.aliyun.com/repository/66888-release-vxGNEt</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -38,7 +38,7 @@
         <repository>
             <id>guyi</id>
             <name>guyi</name>
-            <url>http://nexus.guyi-maple.top/nexus/content/groups/public/</url>
+            <url>https://repo.rdc.aliyun.com/repository/66888-release-vxGNEt</url>
         </repository>
     </repositories>
 
@@ -46,7 +46,7 @@
         <repository>
             <id>guyi-iot</id>
             <name>guyi-iot</name>
-            <url>http://nexus.guyi-maple.top/nexus/content/repositories/iot/</url>
+            <url>https://repo.rdc.aliyun.com/repository/66888-release-vxGNEt</url>
         </repository>
     </distributionManagement>
 
