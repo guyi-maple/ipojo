@@ -26,7 +26,7 @@ public class TaskEntry {
     }
 
     public void makeCoefficient(int current,int maxLength){
-        int delay = this.delay + current;
+        int delay = current == maxLength ? current : this.delay + current;
         if (delay <= maxLength){
             this.coefficient = 1;
             this.index = delay - 1;

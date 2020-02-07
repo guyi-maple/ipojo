@@ -20,4 +20,6 @@ public @interface Timer {
 
     TimeType type() default TimeType.CYCLE;
 
+    TimeUnit unit() default TimeUnit.MINUTES;
+
 }
