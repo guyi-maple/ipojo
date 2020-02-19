@@ -46,7 +46,7 @@
         <repository>
             <id>guyi-iot</id>
             <name>guyi-iot</name>
-            <url>http://nexus.guyi-maple.top/repository/iot/</url>
+            <url>http://nexus.guyi-maple.top/repository/osgi-iot/</url>
         </repository>
     </distributionManagement>
 
