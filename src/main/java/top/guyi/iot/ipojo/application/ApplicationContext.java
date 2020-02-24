@@ -34,14 +34,23 @@ public class ApplicationContext {
 
     private Map<String,Object> configurationFile = Collections.emptyMap();
     private void setConfigurationFile(){
+        Gson gson = new Gson();
+        File defaults = new File("default.configuration.json");
         File file = new File(String.format("%s.configuration.json",this.getName()));
-        if (file.exists()){
-            try {
-                this.configurationFile = new Gson().fromJson(new FileReader(file),new TypeToken<Map<String,Object>>(){}.getType());
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        this.configurationFile = new HashMap<>();
+        try {
+            if (defaults.exists()){
+                Map<String,Object> map = gson.fromJson(new FileReader(defaults),new TypeToken<Map<String,Object>>(){}.getType());
+                this.configurationFile.putAll(map);
             }
+            if (file.exists()){
+                Map<String,Object> map = gson.fromJson(new FileReader(file),new TypeToken<Map<String,Object>>(){}.getType());
+                this.configurationFile.putAll(map);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+
     }
 
     public <T> T getConfigurationFile(String key,Class<T> type,T origin){
