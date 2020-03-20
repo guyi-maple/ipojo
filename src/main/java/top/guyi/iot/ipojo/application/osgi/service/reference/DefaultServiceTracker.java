@@ -7,6 +7,10 @@ import top.guyi.iot.ipojo.application.ApplicationContext;
 
 import java.util.List;
 
+/**
+ * @author guyi
+ * 默认的OSGI服务追踪器
+ */
 public class DefaultServiceTracker extends ServiceTracker {
 
     private ApplicationContext applicationContext;

@@ -4,6 +4,10 @@ import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.bean.BeanInfo;
 import top.guyi.iot.ipojo.application.bean.interfaces.BeanCreator;
 
+/**
+ * @author guyi
+ * 默认的组件创建器
+ */
 public class DefaultBeanCreator implements BeanCreator {
 
     @Override

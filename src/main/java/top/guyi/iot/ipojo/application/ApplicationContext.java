@@ -23,6 +23,10 @@ import java.io.FileReader;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * @author guyi
+ * 容器上下文
+ */
 public class ApplicationContext {
 
     @Setter
@@ -37,7 +41,7 @@ public class ApplicationContext {
         Gson gson = new Gson();
         File defaults = new File("default.configuration.json");
         File file = new File(String.format("%s.configuration.json",this.getName()));
-        this.configurationFile = new HashMap<>();
+        this.configurationFile = new HashMap<>(30);
         try {
             if (defaults.exists()){
                 Map<String,Object> map = gson.fromJson(new FileReader(defaults),new TypeToken<Map<String,Object>>(){}.getType());
@@ -273,7 +277,7 @@ public class ApplicationContext {
     }
     public <T extends ForType> Map<String,T> getMap(Class<T> classes,String name){
         List<T> list = this.getList(classes,name);
-        Map<String,T> map = new HashMap<>();
+        Map<String,T> map = new HashMap<>(list.size());
         for (T bean : list) {
             map.put(bean.forType() == null ? null : bean.forType().toString(),bean);
         }

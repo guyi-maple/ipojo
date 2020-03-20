@@ -4,8 +4,18 @@ import top.guyi.iot.ipojo.application.ApplicationContext;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
-public abstract class ServiceReferenceInvoker {
+/**
+ * @author guyi
+ * OSGI服务获取执行器
+ */
+public abstract class AbstractServiceReferenceInvoker {
 
+    /**
+     * 获取OSGI服务
+     * @param entry 服务获取实体
+     * @param applicationContext 容器上下文
+     * @param bundleContext OSGI上下文
+     */
     public abstract void invoke(ServiceReferenceEntry entry, ApplicationContext applicationContext, BundleContext bundleContext);
 
     protected <T> T get(Class<T> classes,ApplicationContext applicationContext, BundleContext bundleContext){

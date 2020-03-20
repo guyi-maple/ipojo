@@ -10,12 +10,25 @@ import top.guyi.iot.ipojo.application.osgi.service.reference.BundleServiceRefere
 
 import java.util.*;
 
-public abstract class EventPublisher implements ApplicationStartEvent {
+/**
+ * @author guyi
+ * 事件发布者
+ */
+public abstract class AbstractEventPublisher implements ApplicationStartEvent {
 
     protected ApplicationContext applicationContext;
 
     private List<EventConverter> converters = new LinkedList<>();
+
+    /**
+     * 设置所有事件监听器
+     */
     protected abstract void setAllEventConverter();
+
+    /**
+     * 添加事件监听器
+     * @param converter 事件监听器
+     */
     protected void addConverter(EventConverter converter){
         this.converters.add(converter);
     }

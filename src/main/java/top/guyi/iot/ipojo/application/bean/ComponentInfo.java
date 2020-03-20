@@ -2,6 +2,10 @@ package top.guyi.iot.ipojo.application.bean;
 
 import lombok.Data;
 
+/**
+ * @author guyi
+ * 组件注解信息
+ */
 @Data
 public class ComponentInfo {
 

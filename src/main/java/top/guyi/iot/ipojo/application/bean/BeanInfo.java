@@ -10,6 +10,10 @@ import top.guyi.iot.ipojo.application.utils.AnnotationUtils;
 import lombok.Data;
 import org.osgi.framework.BundleContext;
 
+/**
+ * @author guyi
+ * 组件信息
+ */
 @Data
 public class BeanInfo {
 

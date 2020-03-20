@@ -6,16 +6,26 @@ import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.osgi.event.NativeEvent;
 import top.guyi.iot.ipojo.application.osgi.log.StaticLogger;
 
-public abstract class MethodNativeEventInvoker implements EventHandler {
+/**
+ * @author guyi
+ * OSGI原生事件方法监听执行器
+ */
+public abstract class AbstractMethodNativeEventInvoker implements EventHandler {
 
     @Getter
     private String topic;
     private ApplicationContext applicationContext;
-    public MethodNativeEventInvoker(String topic, ApplicationContext applicationContext) {
+    public AbstractMethodNativeEventInvoker(String topic, ApplicationContext applicationContext) {
         this.topic = topic;
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * 执行事件监听方法
+     * @param context 容器上下文
+     * @param event 事件实体
+     * @throws Exception
+     */
     protected abstract void invoke(ApplicationContext context, NativeEvent event) throws Exception;
 
     @Override

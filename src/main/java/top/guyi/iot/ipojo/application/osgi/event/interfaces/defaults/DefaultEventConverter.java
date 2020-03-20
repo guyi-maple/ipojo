@@ -9,6 +9,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author guyi
+ * 默认的事件转换器
+ */
 public class DefaultEventConverter implements EventConverter {
 
     private static final String JSON_CONTENT_NAME = "JSON_CONTENT";

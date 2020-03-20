@@ -8,6 +8,10 @@ import org.osgi.service.log.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author guyi
+ * logger仓库
+ */
 public abstract class AbstractLoggerRepository {
 
     final static String DEFAULT_LOGGER_KEY = "default";

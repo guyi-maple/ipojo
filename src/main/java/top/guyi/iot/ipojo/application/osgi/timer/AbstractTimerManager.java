@@ -9,6 +9,10 @@ import top.guyi.iot.ipojo.application.osgi.timer.enums.TimeType;
 
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * @author guyi
+ * 定时任务管理器
+ */
 public abstract class AbstractTimerManager implements ApplicationStartEvent,ApplicationStopEvent {
 
 
@@ -33,6 +37,9 @@ public abstract class AbstractTimerManager implements ApplicationStartEvent,Appl
         }
     }
 
+    /**
+     * 注册所有方法级定时任务
+     */
     protected abstract void registerAll();
 
     @Override

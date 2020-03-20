@@ -2,6 +2,10 @@ package top.guyi.iot.ipojo.application.osgi.log;
 
 import org.osgi.service.log.Logger;
 
+/**
+ * @author guyi
+ * 静态Logger，用于一些无法使用注入方式获取Logger对象的场景中
+ */
 public class StaticLogger {
 
     private static Logger logger;

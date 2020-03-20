@@ -9,6 +9,10 @@ import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventListener;
 
 import java.util.List;
 
+/**
+ * @author guyi
+ * 事件监听执行器
+ */
 @AllArgsConstructor
 public class EventInvoker implements EventHandler {
 

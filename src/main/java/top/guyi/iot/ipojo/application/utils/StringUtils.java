@@ -2,7 +2,14 @@ package top.guyi.iot.ipojo.application.utils;
 
 import java.util.Random;
 
+/**
+ * @author guyi
+ * 字符串工具
+ */
 public class StringUtils {
+
+    private static final String UNDERLINE = "_";
+    private static final String COLON = ":";
 
     public static boolean isEmpty(String value){
         return value == null || "".equals(value);
@@ -29,7 +36,7 @@ public class StringUtils {
      */
     public static String underlineToHump(String para){
         StringBuilder result=new StringBuilder();
-        String a[]=para.split("_");
+        String[] a = para.split(UNDERLINE);
         for(String s:a){
             if(result.length()==0){
                 result.append(s.toLowerCase());
@@ -47,7 +54,7 @@ public class StringUtils {
      * @return
      */
     public static String humpToUnderline(String para){
-        if(para.contains("_")){
+        if(para.contains(UNDERLINE)){
             return para;
         }
         char[] chs = para.toCharArray();
@@ -80,7 +87,7 @@ public class StringUtils {
      * @return
      */
     public static String addColon(String mac){
-        if(mac.contains(":")){
+        if(mac.contains(COLON)){
             return mac;
         }
         int count = mac.length() / 2;
@@ -90,7 +97,7 @@ public class StringUtils {
             sb.append(arr[i * 2 - 2]);
             sb.append(arr[i * 2 - 1]);
             if(count != i){
-                sb.append(":");
+                sb.append(COLON);
             }
         }
         return sb.toString();

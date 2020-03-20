@@ -8,16 +8,24 @@ import top.guyi.iot.ipojo.application.osgi.service.entry.ServiceEntry;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ServiceRegister implements ApplicationStartEvent {
+/**
+ * @author guyi
+ * OSGI服务注册者
+ */
+public abstract class AbstractServiceRegister implements ApplicationStartEvent {
 
     private List<ServiceEntry> entries = new LinkedList<>();
 
+    /**
+     * 注册所有服务
+     */
     protected abstract void registerAll();
 
     protected void register(ServiceEntry entry){
         this.entries.add(entry);
     }
 
+    @Override
     public void onStart(ApplicationContext applicationContext, BundleContext bundleContext) {
         this.registerAll();
         for (ServiceEntry entry : this.entries) {

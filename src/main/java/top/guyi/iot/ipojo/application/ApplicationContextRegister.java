@@ -4,6 +4,10 @@ import top.guyi.iot.ipojo.application.bean.BeanInfo;
 import top.guyi.iot.ipojo.application.bean.ComponentInfo;
 import top.guyi.iot.ipojo.application.utils.StringUtils;
 
+/**
+ * @author guyi
+ * 组件注册器
+ */
 public class ApplicationContextRegister {
 
     private ApplicationContext applicationContext;

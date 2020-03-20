@@ -10,24 +10,37 @@ import top.guyi.iot.ipojo.application.osgi.event.interfaces.Event;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventConverter;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventListener;
 import top.guyi.iot.ipojo.application.osgi.event.invoker.EventInvoker;
-import top.guyi.iot.ipojo.application.osgi.event.invoker.MethodEventInvoker;
-import top.guyi.iot.ipojo.application.osgi.event.invoker.MethodNativeEventInvoker;
+import top.guyi.iot.ipojo.application.osgi.event.invoker.AbstractMethodEventInvoker;
+import top.guyi.iot.ipojo.application.osgi.event.invoker.AbstractMethodNativeEventInvoker;
 
 import java.util.*;
 
-public abstract class EventRegister implements ApplicationStartEvent {
+/**
+ * @author guyi
+ * 事件内容转换器
+ */
+public abstract class AbstractEventRegister implements ApplicationStartEvent {
 
     protected ApplicationContext applicationContext;
     protected BundleContext bundleContext;
 
     @Getter
     private List<EventConverter> converters = new LinkedList<>();
+
+    /**
+     * 注册所有事件内容转换者
+     */
     protected abstract void setAllConverter();
+
     protected void setConverter(EventConverter converter){
         this.converters.add(converter);
     }
 
+    /**
+     * 注册所有事件监听器
+     */
     protected abstract void registerAllListener();
+
     protected void registerListener(BundleContext bundleContext,EventListener listener){
         try {
             String[] topic = ((Event)listener.eventClass().newInstance()).topic();
@@ -39,8 +52,12 @@ public abstract class EventRegister implements ApplicationStartEvent {
         }
     }
 
+    /**
+     * 注册所有方法事件监听器
+     */
     protected abstract void registerAllMethodListener();
-    protected void registerMethodListener(BundleContext bundleContext, MethodEventInvoker invoker){
+
+    protected void registerMethodListener(BundleContext bundleContext, AbstractMethodEventInvoker invoker){
         try {
             String[] topic = invoker.getEventClass().newInstance().topic();
             Dictionary<String,Object> props = new Hashtable<>();
@@ -51,7 +68,7 @@ public abstract class EventRegister implements ApplicationStartEvent {
             e.printStackTrace();
         }
     }
-    protected void registerNativeMethodListener(BundleContext bundleContext, MethodNativeEventInvoker invoker){
+    protected void registerNativeMethodListener(BundleContext bundleContext, AbstractMethodNativeEventInvoker invoker){
         String[] topic = new String[]{invoker.getTopic()};
         Dictionary<String,Object> props = new Hashtable<>();
         props.put(EventConstants.EVENT_TOPIC,topic);

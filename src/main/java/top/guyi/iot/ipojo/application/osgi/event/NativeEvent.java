@@ -4,6 +4,11 @@ import org.osgi.service.event.Event;
 
 import java.util.*;
 
+
+/**
+ * @author guyi
+ * 原生事件
+ */
 public class NativeEvent implements top.guyi.iot.ipojo.application.osgi.event.interfaces.Event {
 
     private Event event;
@@ -28,7 +33,7 @@ public class NativeEvent implements top.guyi.iot.ipojo.application.osgi.event.in
     }
 
     public Map<String,Object> all(){
-        Map<String,Object> data = new HashMap<>();
+        Map<String,Object> data = new HashMap<>(4);
         for (String key : this.keySet()) {
             data.put(key,this.get(key));
         }

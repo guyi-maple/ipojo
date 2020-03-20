@@ -5,6 +5,10 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author guyi
+ * 配置内容转换器
+ */
 public class ConfigurationTypeFormat {
 
     private Gson gson = new Gson();

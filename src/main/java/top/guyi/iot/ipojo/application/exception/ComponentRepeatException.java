@@ -1,5 +1,9 @@
 package top.guyi.iot.ipojo.application.exception;
 
+/**
+ * @author guyi
+ * 同种类型存在优先级相同的组件
+ */
 public class ComponentRepeatException extends RuntimeException {
 
     public ComponentRepeatException(Class<?> classes){

@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerConsumer;
 
+/**
+ * @author guyi
+ * 空Logger，所有日志都会被丢弃
+ */
 @AllArgsConstructor
 public class NoneLogger implements Logger {
 

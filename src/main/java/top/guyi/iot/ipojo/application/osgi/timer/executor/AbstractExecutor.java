@@ -10,6 +10,10 @@ import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author guyi
+ * 定时任务
+ */
 public abstract class AbstractExecutor {
 
     private int index = 0;
@@ -28,8 +32,16 @@ public abstract class AbstractExecutor {
         }
     }
 
+    /**
+     * 定时任务容器的最大长度
+     * @return
+     */
     protected abstract int maxLength();
 
+    /**
+     * 定时任务执行周期的时间单位
+     * @return
+     */
     protected abstract TimeUnit unit();
 
     public void start(){

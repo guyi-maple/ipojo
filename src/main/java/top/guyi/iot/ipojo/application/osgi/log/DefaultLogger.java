@@ -6,6 +6,9 @@ import lombok.Setter;
 import org.osgi.service.log.Logger;
 import org.osgi.service.log.LoggerConsumer;
 
+/**
+ * @author guyi
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 public class DefaultLogger implements Logger {

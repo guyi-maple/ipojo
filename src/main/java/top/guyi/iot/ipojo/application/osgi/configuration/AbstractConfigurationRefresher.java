@@ -11,24 +11,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ConfigurationRefresher implements ApplicationStartEvent {
+/**
+ * @author guyi
+ * 配置刷新器
+ */
+public abstract class AbstractConfigurationRefresher implements ApplicationStartEvent {
 
     private ApplicationContext applicationContext;
     private ConfigurationTypeFormat format = new ConfigurationTypeFormat();
-    private Map<String, List<ConfigurationRefreshInvoker>> invokers = new HashMap<>();
+    private Map<String, List<AbstractConfigurationRefreshInvoker>> invokers = new HashMap<>();
 
-    protected List<ConfigurationRefreshInvoker> getInvokers(String key){
-        List<ConfigurationRefreshInvoker> invokers = this.invokers.get(key);
+    protected List<AbstractConfigurationRefreshInvoker> getInvokers(String key){
+        List<AbstractConfigurationRefreshInvoker> invokers = this.invokers.get(key);
         if (invokers == null){
             invokers = new LinkedList<>();
         }
         return invokers;
     }
 
+    /**
+     * 注册所有配置刷新器
+     */
     protected abstract void registerInvokerAll();
 
-    protected void registerInvoker(ConfigurationRefreshInvoker invoker){
-        List<ConfigurationRefreshInvoker> invokers = this.getInvokers(invoker.getKey());
+    protected void registerInvoker(AbstractConfigurationRefreshInvoker invoker){
+        List<AbstractConfigurationRefreshInvoker> invokers = this.getInvokers(invoker.getKey());
         invokers.add(invoker);
         this.invokers.put(invoker.getKey(),invokers);
     }
@@ -44,7 +51,7 @@ public abstract class ConfigurationRefresher implements ApplicationStartEvent {
             if (configurationValue == null){
                 return;
             }
-            for (ConfigurationRefreshInvoker invoker : this.getInvokers(key)) {
+            for (AbstractConfigurationRefreshInvoker invoker : this.getInvokers(key)) {
                 Object value = this.format.format(invoker.getType(),configurationValue);
                 invoker.refresh(this.applicationContext,Object.class.cast(value));
             }

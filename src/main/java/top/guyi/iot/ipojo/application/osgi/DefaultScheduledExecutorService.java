@@ -4,6 +4,10 @@ import top.guyi.iot.ipojo.application.osgi.log.StaticLogger;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
+/**
+ * @author guyi
+ * 默认的线程池
+ */
 public class DefaultScheduledExecutorService extends ScheduledThreadPoolExecutor {
 
     public DefaultScheduledExecutorService(int corePoolSize) {

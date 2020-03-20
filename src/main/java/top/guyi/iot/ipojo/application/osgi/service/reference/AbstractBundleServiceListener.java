@@ -11,12 +11,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author guyi
+ * OSGI服务监听器
+ */
 public abstract class AbstractBundleServiceListener
         implements ApplicationStartEvent, ApplicationStartSuccessEvent, ApplicationStopEvent {
 
     private ApplicationContext applicationContext;
     private BundleContext bundleContext;
 
+    /**
+     * 注册所有OSGI服务监听器
+     * @param applicationContext 容器上下文
+     */
     protected abstract void registerAll(ApplicationContext applicationContext);
 
     private Map<String,ServiceReferenceEntry> entries;
@@ -29,10 +37,11 @@ public abstract class AbstractBundleServiceListener
         }
     }
 
+    @Override
     public void onStart(final ApplicationContext applicationContext, final BundleContext bundleContext) throws Exception {
         this.applicationContext = applicationContext;
         this.bundleContext = bundleContext;
-        this.entries = new HashMap<>();
+        this.entries = new HashMap<>(20);
         this.registerAll(applicationContext);
     }
 
@@ -40,7 +49,7 @@ public abstract class AbstractBundleServiceListener
 
     @Override
     public void onStartSuccess(final ApplicationContext applicationContext, final BundleContext bundleContext) throws Exception {
-        Map<Class<?>,List<ServiceReferenceEntry>> trackerTemp = new HashMap<>();
+        Map<Class<?>,List<ServiceReferenceEntry>> trackerTemp = new HashMap<>(10);
 
         for (ServiceReferenceEntry entry : entries.values()) {
             for (Class<?> serviceClass : entry.getServiceClasses()) {

@@ -1,5 +1,9 @@
 package top.guyi.iot.ipojo.application.exception;
 
+/**
+ * @author guyi
+ * 组件初始化失败
+ */
 public class ComponentCreateException extends RuntimeException {
 
     public ComponentCreateException(Class<?> classes){

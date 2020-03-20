@@ -10,12 +10,16 @@ import top.guyi.iot.ipojo.application.osgi.log.StaticLogger;
 
 import java.util.List;
 
-public abstract class MethodEventInvoker implements EventHandler {
+/**
+ * @author guyi
+ * 方法事件执行者
+ */
+public abstract class AbstractMethodEventInvoker implements EventHandler {
 
     @Getter
     private Class<? extends Event> eventClass;
     private ApplicationContext applicationContext;
-    public MethodEventInvoker(Class<? extends Event> eventClass, ApplicationContext applicationContext) {
+    public AbstractMethodEventInvoker(Class<? extends Event> eventClass, ApplicationContext applicationContext) {
         this.eventClass = eventClass;
         this.applicationContext = applicationContext;
     }
@@ -23,6 +27,12 @@ public abstract class MethodEventInvoker implements EventHandler {
     @Setter
     private List<EventConverter> converters;
 
+    /**
+     * 指定事件监听方法
+     * @param context 容器上下文
+     * @param event 事件实体
+     * @throws Exception
+     */
     protected abstract void invoke(ApplicationContext context,Event event) throws Exception;
 
     @Override

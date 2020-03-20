@@ -9,15 +9,50 @@ import top.guyi.iot.ipojo.application.osgi.env.EnvMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-public abstract class DefaultApplicationActivator implements BundleActivator {
+/**
+ * @author guyi
+ * Bundle入口
+ */
+public abstract class AbstractApplicationActivator implements BundleActivator {
 
+    /**
+     * 注册所有组件
+     * @param applicationContext 容器上下文
+     * @param bundleContext OSGI上下文
+     */
     protected abstract void registerComponent(ApplicationContext applicationContext, BundleContext bundleContext);
+
+    /**
+     * 获取Bundle名称
+     * @return
+     */
     protected abstract String getName();
+
+    /**
+     * 获取配置的环境变量
+     * @return
+     */
     protected abstract EnvMap getEnv();
 
-//    protected abstract void onAfterPropertiesSet(ApplicationContext applicationContext,BundleContext bundleContext);
+    /**
+     * 执行所有Bundle启动监听器
+     * @param applicationContext 容器上下文
+     * @param bundleContext OSGI上下文
+     */
     protected abstract void onStart(ApplicationContext applicationContext,BundleContext bundleContext);
+
+    /**
+     * 执行所有Bundle启动成功监听器
+     * @param applicationContext 容器上下文
+     * @param bundleContext OSGI上下文
+     */
     protected abstract void onStartSuccess(ApplicationContext applicationContext,BundleContext bundleContext);
+
+    /**
+     * 执行所有Bundle关闭监听器
+     * @param applicationContext 容器上下文
+     * @param bundleContext OSGI上下文
+     */
     protected abstract void onStop(ApplicationContext applicationContext,BundleContext bundleContext);
 
     private ApplicationContext applicationContext;
@@ -47,13 +82,12 @@ public abstract class DefaultApplicationActivator implements BundleActivator {
 
         applicationContext.start(context,executorService);
 
-//        this.onAfterPropertiesSet(applicationContext,context);
         this.onStart(applicationContext,context);
         this.onStartSuccess(applicationContext,context);
     }
 
     @Override
-    public void stop(BundleContext context) throws Exception {
+    public void stop(BundleContext context) {
         this.onStop(applicationContext,context);
         applicationContext.stop(context);
         if (this.executorService != null){

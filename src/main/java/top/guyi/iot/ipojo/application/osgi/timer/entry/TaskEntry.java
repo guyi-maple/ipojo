@@ -4,6 +4,10 @@ import lombok.Data;
 import top.guyi.iot.ipojo.application.osgi.timer.TimerRunnable;
 import top.guyi.iot.ipojo.application.osgi.timer.enums.TimeType;
 
+/**
+ * @author guyi
+ * 任务实体
+ */
 @Data
 public class TaskEntry {
 
