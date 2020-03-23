@@ -12,12 +12,14 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractMethodTimerRunnable implements TimerRunnable {
 
     private String name;
+    private int initDelay;
     private int delay;
     private TimeType type;
     private TimeUnit unit;
 
-    public AbstractMethodTimerRunnable(String name, int delay, TimeType type, TimeUnit unit) {
+    public AbstractMethodTimerRunnable(String name, int initDelay, int delay, TimeType type, TimeUnit unit) {
         this.name = name;
+        this.initDelay = initDelay;
         this.delay = delay;
         this.type = type;
         this.unit = unit;

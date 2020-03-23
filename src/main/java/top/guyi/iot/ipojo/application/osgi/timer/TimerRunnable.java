@@ -24,6 +24,12 @@ public interface TimerRunnable {
     int delay();
 
     /**
+     * 任务开始延迟时间
+     * @return 延迟时间
+     */
+    int initDelay();
+
+    /**
      * 定时任务执行方式
      * @return 定时任务执行方式
      */

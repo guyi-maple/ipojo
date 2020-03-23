@@ -39,14 +39,14 @@ public abstract class AbstractApplicationActivator implements BundleActivator {
      * @param applicationContext 容器上下文
      * @param bundleContext OSGI上下文
      */
-    protected abstract void onStart(ApplicationContext applicationContext,BundleContext bundleContext);
+    protected abstract void onStart(ApplicationContext applicationContext,BundleContext bundleContext) throws Exception;
 
     /**
      * 执行所有Bundle启动成功监听器
      * @param applicationContext 容器上下文
      * @param bundleContext OSGI上下文
      */
-    protected abstract void onStartSuccess(ApplicationContext applicationContext,BundleContext bundleContext);
+    protected abstract void onStartSuccess(ApplicationContext applicationContext,BundleContext bundleContext) throws Exception;
 
     /**
      * 执行所有Bundle关闭监听器

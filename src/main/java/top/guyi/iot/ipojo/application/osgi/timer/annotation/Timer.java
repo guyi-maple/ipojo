@@ -32,7 +32,7 @@ public @interface Timer {
      * 任务开始延迟时间
      * @return 延迟时间
      */
-    int initDelay() default -1;
+    int initDelay() default 0;
 
     /**
      * 任务执行方式

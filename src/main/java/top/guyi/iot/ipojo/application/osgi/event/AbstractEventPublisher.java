@@ -21,13 +21,13 @@ public abstract class AbstractEventPublisher implements ApplicationStartEvent {
     private List<EventConverter> converters = new LinkedList<>();
 
     /**
-     * 设置所有事件监听器
+     * 设置所有事件转换器
      */
     protected abstract void setAllEventConverter();
 
     /**
-     * 添加事件监听器
-     * @param converter 事件监听器
+     * 添加事件转换器
+     * @param converter 事件转换器
      */
     protected void addConverter(EventConverter converter){
         this.converters.add(converter);

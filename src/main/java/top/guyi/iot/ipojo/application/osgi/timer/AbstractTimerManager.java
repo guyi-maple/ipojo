@@ -31,9 +31,9 @@ public abstract class AbstractTimerManager implements ApplicationStartEvent,Appl
             }
         };
         if (runnable.type() == TimeType.CYCLE){
-            this.service.scheduleAtFixedRate(run,runnable.delay(),runnable.delay(),runnable.unit());
+            this.service.scheduleAtFixedRate(run,runnable.initDelay(),runnable.delay(),runnable.unit());
         }else{
-            this.service.schedule(run,runnable.delay(),runnable.unit());
+            this.service.schedule(run,runnable.initDelay(),runnable.unit());
         }
     }
 
