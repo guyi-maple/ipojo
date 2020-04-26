@@ -26,6 +26,11 @@ public abstract class AbstractMethodTimerRunnable implements TimerRunnable {
     }
 
     @Override
+    public int initDelay() {
+        return this.initDelay;
+    }
+
+    @Override
     public String name() {
         return this.name;
     }

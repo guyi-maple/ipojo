@@ -1,0 +1,9 @@
+{
+  "name": "ipojo",
+  "useComponents": [
+    {
+      "type": "classes",
+      "classes": "top.guyi.iot.ipojo.application.osgi.DefaultScheduledExecutorService"
+    }
+  ]
+}
