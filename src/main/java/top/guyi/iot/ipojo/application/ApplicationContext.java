@@ -39,8 +39,8 @@ public class ApplicationContext {
     private Map<String,Object> configurationFile = Collections.emptyMap();
     private void setConfigurationFile(){
         Gson gson = new Gson();
-        File defaults = new File("default.configuration.json");
-        File file = new File(String.format("%s.configuration.json",this.getName()));
+        File defaults = new File("default.configuration");
+        File file = new File(String.format("%s.configuration",this.getName()));
         this.configurationFile = new HashMap<>(30);
         try {
             if (defaults.exists()){

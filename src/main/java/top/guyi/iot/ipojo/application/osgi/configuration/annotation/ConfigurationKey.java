@@ -25,4 +25,10 @@ public @interface ConfigurationKey {
      */
     boolean file() default false;
 
+    /**
+     * 配置项说明
+     * @return 配置项说明
+     */
+    String remark() default "";
+
 }
