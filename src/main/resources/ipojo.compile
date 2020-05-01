@@ -3,11 +3,11 @@
   "jdk": "7",
   "formatJdkVersion": true,
   "exclude": {
-    "dependencyCopy": [
+    "copy": [
       "^org.apache.felix.*$",
       "^org.osgi.*$"
     ],
-    "dependencyScope": [
+    "scope": [
       "provided",
       "test"
     ]
