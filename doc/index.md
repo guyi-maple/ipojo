@@ -2,16 +2,16 @@
 
 目前仅支持apache-felix容器
 
-* @Component 声明组件
-* @Resource 注入组件
-* @Service 注册OSGI服务
-* @Primary 多个组件时优先注入
-* @ConfigurationKey 编译期间注入配置信息
-* @ListenEvent 监听事件
-* @ListenNativeEvent 监听OSGI原生事件
-* @Log 注入osgi-logger
-* @BundleServiceReference 从OSGI容器中获取服务
-* @Timer 定时任务
+* [@Component](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/annotation/Component.java) 声明组件
+* [@Resource](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/annotation/Resource.java) 注入组件
+* [@Service](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/service/annotation/Service.java) 注册OSGI服务
+* [@Primary](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/annotation/Primary.java) 多个组件时优先注入
+* [@ConfigurationKey](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/configuration/annotation/ConfigurationKey.java) 编译期间注入配置信息
+* [@ListenEvent](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/event/annotation/ListenEvent.java) 监听事件
+* [@ListenNativeEvent](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/event/annotation/ListenNativeEvent.java) 监听OSGI原生事件
+* [@Log](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/log/Log.java) 注入osgi-logger
+* [@BundleServiceReference](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/service/reference/BundleServiceReference.java) 从OSGI容器中获取服务
+* [@Timer](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/timer/annotation/Timer.java) 定时任务
 
 ## 功能文档
 
