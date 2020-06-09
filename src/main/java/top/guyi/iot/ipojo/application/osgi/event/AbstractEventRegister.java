@@ -2,10 +2,12 @@ package top.guyi.iot.ipojo.application.osgi.event;
 
 import lombok.Getter;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.event.EventConstants;
 import org.osgi.service.event.EventHandler;
 import top.guyi.iot.ipojo.application.ApplicationContext;
 import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStartEvent;
+import top.guyi.iot.ipojo.application.bean.interfaces.ApplicationStopEvent;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.Event;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventConverter;
 import top.guyi.iot.ipojo.application.osgi.event.interfaces.EventListener;
@@ -19,13 +21,15 @@ import java.util.*;
  * @author guyi
  * 事件内容转换器
  */
-public abstract class AbstractEventRegister implements ApplicationStartEvent {
+public abstract class AbstractEventRegister implements ApplicationStartEvent, ApplicationStopEvent {
 
     protected ApplicationContext applicationContext;
     protected BundleContext bundleContext;
 
     @Getter
-    private List<EventConverter> converters = new LinkedList<>();
+    private final List<EventConverter> converters = new LinkedList<>();
+
+    private final List<ServiceRegistration<?>> registrations = new LinkedList<>();
 
     /**
      * 注册所有事件内容转换者
@@ -63,7 +67,7 @@ public abstract class AbstractEventRegister implements ApplicationStartEvent {
             Dictionary<String,Object> props = new Hashtable<>();
             props.put(EventConstants.EVENT_TOPIC,topic);
             invoker.setConverters(this.converters);
-            bundleContext.registerService(EventHandler.class.getName(),invoker,props);
+            this.registrations.add(bundleContext.registerService(EventHandler.class.getName(),invoker,props));
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -91,4 +95,10 @@ public abstract class AbstractEventRegister implements ApplicationStartEvent {
         this.registerAllMethodListener();
     }
 
+    @Override
+    public void onStop(ApplicationContext applicationContext, BundleContext bundleContext) {
+        for (ServiceRegistration<?> registration : this.registrations) {
+            registration.unregister();
+        }
+    }
 }

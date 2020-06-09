@@ -11,15 +11,5 @@
       "provided",
       "test"
     ]
-  },
-  "manifest": {
-    "Private-Package": "top.guyi.iot.ipojo.application",
-    "Import-Package": [
-      "org.osgi.framework",
-      "org.osgi.util.tracker",
-      "org.osgi.service.event",
-      "org.osgi.service.log",
-      "org.osgi.service.log.admin"
-    ]
   }
 }

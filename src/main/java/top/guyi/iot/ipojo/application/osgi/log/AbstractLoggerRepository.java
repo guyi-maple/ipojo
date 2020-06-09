@@ -16,8 +16,8 @@ public abstract class AbstractLoggerRepository {
 
     final static String DEFAULT_LOGGER_KEY = "default";
 
-    private Map<String,Logger> loggerMap = new HashMap<>();
-    private Map<String,DefaultLogger> interceptorHashMap = new HashMap<>();
+    private final Map<String,Logger> loggerMap = new HashMap<>();
+    private final Map<String,DefaultLogger> interceptorHashMap = new HashMap<>();
 
     @BundleServiceReference(LoggerFactory.class)
     public void awaitLoggerFactory(LoggerFactory factory,ApplicationContext context){
