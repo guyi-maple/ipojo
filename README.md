@@ -20,4 +20,4 @@
 
 为了干掉服务获取、事件监听、日志等等等，一切让人觉得恼火的体力活。
 
-具体使用请见 [文档](https://github.com/guyi-maple/ipojo/doc/home.md)
+具体使用请见 [文档](https://github.com/guyi-maple/ipojo/doc/index.md)
