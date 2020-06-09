@@ -15,16 +15,15 @@
 
 ## 功能文档
 
-* [Home](https://github.com/guyi-maple/ipojo/wiki)
-* [安装](https://github.com/guyi-maple/ipojo/wiki/install)
-* [组件注册及注入](https://github.com/guyi-maple/ipojo/wiki/component-register-inject)
-* [内置组件](https://github.com/guyi-maple/ipojo/wiki/builtIn-components)
-* [上下文事件](https://github.com/guyi-maple/ipojo/wiki/application-event)
-* [OSGI事件](https://github.com/guyi-maple/ipojo/wiki/osgi-event)
-* [定时任务](https://github.com/guyi-maple/ipojo/wiki/timer)
-* [服务注册及获取](https://github.com/guyi-maple/ipojo/wiki/service-register-get)
-* [配置项读取](https://github.com/guyi-maple/ipojo/wiki/configuration)
-* [日志](https://github.com/guyi-maple/ipojo/wiki/log)
+* [安装](install.md)
+* [组件注册及注入](component-register-inject.md)
+* [内置组件](builtIn-components.md)
+* [上下文事件](application-event.md)
+* [OSGI事件](osgi-event.md)
+* [定时任务](timer.md)
+* [服务注册及获取](service-register-get.md)
+* [配置项读取](configuration.md)
+* [日志](log.md)
 
 ## 重要说明
 此项目只是一个注解式API，有部分实现的抽象类，但是不负责依赖注入等功能的具体实现
