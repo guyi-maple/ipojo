@@ -2,6 +2,15 @@
   "name": "ipojo",
   "jdk": "7",
   "formatJdkVersion": true,
+  "manifest": {
+    "Import-Package": [
+      "org.osgi.framework",
+      "org.osgi.util.tracker",
+      "org.osgi.service.event",
+      "org.osgi.service.log",
+      "org.osgi.service.log.admin"
+    ]
+  },
   "exclude": {
     "copy": [
       "^org.apache.felix.*$",
