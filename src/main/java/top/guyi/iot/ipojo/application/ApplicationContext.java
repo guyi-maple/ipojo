@@ -36,6 +36,13 @@ public class ApplicationContext {
     @Setter
     private Map<String,String> env = Collections.emptyMap();
 
+    private BundleContext bundleContext;
+
+    public String getCacheRoot(){
+        String root = bundleContext.getProperty("felix.cache.rootdir");
+        return StringUtils.isEmpty(root) ? new File("").getAbsolutePath() : root;
+    }
+
     private Map<String,Object> configurationFile = Collections.emptyMap();
     private void setConfigurationFile(){
         Gson gson = new Gson();
@@ -130,6 +137,7 @@ public class ApplicationContext {
 
     public void start(BundleContext bundleContext,ExecutorService service) throws Exception {
         this.service = service;
+        this.bundleContext = bundleContext;
 
         List<BeanInfo> infos = new LinkedList<>(this.beanInfoMap.values());
         Collections.sort(infos, new Comparator<BeanInfo>() {
