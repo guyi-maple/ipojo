@@ -1,6 +1,7 @@
 package top.guyi.iot.ipojo.application.utils;
 
 import java.util.Random;
+import java.util.regex.Pattern;
 
 /**
  * @author guyi
@@ -12,7 +13,7 @@ public class StringUtils {
     private static final String COLON = ":";
 
     public static boolean isEmpty(String value){
-        return value == null || "".equals(value);
+        return value == null || "".equals(value) || Pattern.matches("\\s+",value);
     }
 
     /**
@@ -22,7 +23,7 @@ public class StringUtils {
      */
     public static String randomIntString(int count){
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < count; i++) {
             sb.append(random.nextInt(9));
         }
