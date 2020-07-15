@@ -38,9 +38,13 @@ public class ApplicationContext {
 
     private BundleContext bundleContext;
 
-    public String getCacheRoot(){
-        String root = bundleContext.getProperty("felix.cache.rootdir");
-        return StringUtils.isEmpty(root) ? new File("").getAbsolutePath() : root;
+    private String dataRoot;
+
+    public String getDataRoot(){
+        if (StringUtils.isEmpty(dataRoot)){
+            dataRoot = bundleContext.getBundle().getDataFile("").getAbsolutePath();
+        }
+        return dataRoot;
     }
 
     private Map<String,Object> configurationFile = Collections.emptyMap();
