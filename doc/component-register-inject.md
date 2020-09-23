@@ -15,9 +15,9 @@ Component注解拥有如下属性：
 
 在字段上添加注解 [@Resource](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/annotation/Resource.java) 即可从组件容器中选择符合条件的组件注入
 
-top.guyi.iot.ipojo.application.annotation.Resource 与 javax.annotation.Resource 同义，均可执行注入操作
+Resource 与 javax.annotation.Resource 同义，均可执行注入操作
 
-如无特殊说明，后续所说的Resource注解均表示 top.guyi.iot.ipojo.application.annotation.Resource
+如无特殊说明，后续所说的Resource注解均表示 Resource
 
 Resource注解拥有如下属性：
 * name：只注入名称为此属性值的组件
