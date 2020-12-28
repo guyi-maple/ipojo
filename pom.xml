@@ -6,7 +6,7 @@
 
     <groupId>tech.guyi.ipojo</groupId>
     <artifactId>ipojo</artifactId>
-    <version>1.0.0.1</version>
+    <version>1.0.0.3</version>
 
     <name>ipojo</name>
     <url>https://github.com/guyi-maple/ipojo</url>

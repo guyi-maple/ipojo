@@ -7,8 +7,8 @@ import tech.guyi.ipojo.application.bean.interfaces.ApplicationStopEvent;
 import tech.guyi.ipojo.application.osgi.log.StaticLogger;
 import tech.guyi.ipojo.application.osgi.timer.enums.TimeType;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 
@@ -22,7 +22,7 @@ public abstract class AbstractTimerManager implements ApplicationStartEvent,Appl
     private ApplicationContext context;
     private ScheduledExecutorService service;
 
-    private final List<ScheduledFuture<?>> futures = new LinkedList<>();
+    private final Map<String,ScheduledFuture<?>> futures = new HashMap<>();
 
     public void register(final TimerRunnable runnable){
         Runnable run = new Runnable() {
@@ -36,13 +36,17 @@ public abstract class AbstractTimerManager implements ApplicationStartEvent,Appl
             }
         };
 
+        if (this.futures.containsKey(runnable.name())){
+            this.futures.get(runnable.name()).cancel(true);
+        }
+
         ScheduledFuture<?> future;
         if (runnable.type() == TimeType.CYCLE){
             future = this.service.scheduleAtFixedRate(run,runnable.initDelay(),runnable.delay(),runnable.unit());
         }else{
             future = this.service.schedule(run,runnable.initDelay(),runnable.unit());
         }
-        this.futures.add(future);
+        this.futures.put(runnable.name(),future);
     }
 
     /**
@@ -59,11 +63,12 @@ public abstract class AbstractTimerManager implements ApplicationStartEvent,Appl
 
     @Override
     public void onStop(ApplicationContext applicationContext, BundleContext bundleContext) {
-        for (ScheduledFuture<?> future : this.futures) {
+        for (ScheduledFuture<?> future : this.futures.values()) {
             if (future != null){
                 future.cancel(true);
             }
         }
+        this.futures.clear();
     }
 
 }
