@@ -1,5 +1,5 @@
 
-在方法上添加 [@Timer](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/timer/annotation/Timer.java) 注解，即可将此方法设置为定时任务
+在方法上添加 [@Timer](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/tech/guyi/ipojo/application/osgi/timer/annotation/Timer.java) 注解，即可将此方法设置为定时任务
 
 * name 
 定时任务的名称
@@ -11,7 +11,7 @@
 任务初次执行的延迟时间，表示任务将在多久后开始执行，默认为0
 
 * type 
-任务执行方式，ONCE - 仅执行一次；CYCLE - 循环执行， 默认为循环执行，[TimeType](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/timer/enums/TimeType.java)
+任务执行方式，ONCE - 仅执行一次；CYCLE - 循环执行， 默认为循环执行，[TimeType](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/tech/guyi/ipojo/application/osgi/timer/enums/TimeType.java)
 
 * unit 
 时间单位，默认为分钟，java.util.concurrent.TimeUnit

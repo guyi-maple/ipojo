@@ -1,7 +1,7 @@
 
 ## 注入org.osgi.service.log.Logger
 
-在字段上添加 [@Log](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/log/Log.java)注解即可注入Logger对象
+在字段上添加 [@Log](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/tech/guyi/ipojo/application/osgi/log/Log.java)注解即可注入Logger对象
 
 ```
 @Log
@@ -10,7 +10,7 @@ private Logger logger;
 
 当前Bundle的名称会自动配置到Logger对象中
 
-## [StaticLogger](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/log/StaticLogger.java)
+## [StaticLogger](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/tech/guyi/ipojo/application/osgi/log/StaticLogger.java)
 
 在静态方法等无法使用组件的情况下，可以使用StaticLogger进行日志输出
 

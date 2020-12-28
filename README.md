@@ -1,23 +1,15 @@
 # ipojo
 
-目前接触到运营商的一些智能网关项目，需要编写OSGI-Bundle。
+[使用文档](https://github.com/guyi-maple/ipojo/blob/master/doc/index.md)
 
-智能网关(其实就是光猫)，JRE基本都是被阉割的，很多用顺手的东西，在OSGI上并不能使用。
+基于Apache-Felix的依赖注入API
 
-最关键的是，OSGI本身的很多操作都非常繁琐，完全不能忍。
+* 以注解的方式实现依赖注入
+* 内置定时器、线程池
+* 简单的异步处理库
 
-说几个令人头疼的点：
+## 关于编译
 
-* 依赖注入：能使用的依赖注入框架大部分都是基于XML的，太麻烦
-* 服务获取：需要写好几行代码，有时还需要实现服务追踪器
-* 服务注册：同上，写起来太麻烦
-* 事件监听：必须实现监听器接口，还需要在BundleContext上注册，不能在方法上加注解监听，差评
-* ......
+这只是一个注解式的API，功能实现需要配合编译插件([ipojo-compile-maven](https://github.com/guyi-maple/ipojo/blob/master/doc/index.md))使用
 
-主要是被Spring以及SpringBoot宠溺的我，承受不来这些重压啊
-
-于是，ipojo出来了 （ps：和apache那个同名，主要是起名困难户😂）
-
-为了干掉服务获取、事件监听、日志等等等，一切让人觉得恼火的体力活。
-
-具体使用请见 [文档](https://github.com/guyi-maple/ipojo/blob/master/doc/index.md)
+PS：和apache的开源项目IPOJO同名，两者并无任何关系，主要是起名困难户😂。

@@ -1,4 +1,4 @@
-## [ConfigurationKey](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/top/guyi/iot/ipojo/application/osgi/configuration/annotation/ConfigurationKey.java)
+## [ConfigurationKey](https://github.com/guyi-maple/ipojo/blob/master/src/main/java/tech/guyi/ipojo/application/osgi/configuration/annotation/ConfigurationKey.java)
 
 在字段上添加 @ConfigurationKey 注解，即可在编译时将配置项的值注入到字段中。
 
