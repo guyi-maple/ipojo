@@ -12,7 +12,7 @@ git clone https://github.com/guyi-maple/ipojo.git
 <dependency>
   <groupId>tech.guyi.ipojo</groupId>
   <artifactId>ipojo</artifactId>
-  <version>1.0.0.0</version>
+  <version>1.0.0.3</version>
 </dependency>
 ```
 
