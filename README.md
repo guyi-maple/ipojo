@@ -15,3 +15,7 @@
 配合[ipojo-module](https://github.com/guyi-maple/ipojo-module)项目，可以拥有基本的功能扩展。
 
 PS：和apache的开源项目IPOJO同名，两者并无任何关系，主要是起名困难户😂。
+
+## 感谢
+
+感谢 [Jetbrains](https://www.jetbrains.com/?from=ipojo) 提供的开源许可
