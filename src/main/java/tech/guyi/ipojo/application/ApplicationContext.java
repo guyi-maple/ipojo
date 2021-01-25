@@ -284,14 +284,14 @@ public class ApplicationContext {
         return list;
     }
 
-    public <T extends ForType> Map<String,T> getMap(Class<T> classes){
+    public <K,T extends ForType<K>> Map<K,T> getMap(Class<T> classes){
         return this.getMap(classes,null);
     }
-    public <T extends ForType> Map<String,T> getMap(Class<T> classes,String name){
+    public <K,T extends ForType<K>> Map<K,T> getMap(Class<T> classes,String name){
         List<T> list = this.getList(classes,name);
-        Map<String,T> map = new HashMap<>(list.size());
+        Map<K,T> map = new HashMap<>(list.size());
         for (T bean : list) {
-            map.put(bean.forType() == null ? null : bean.forType().toString(),bean);
+            map.put(bean.forType() == null ? null : bean.forType(),bean);
         }
         return map;
     }
